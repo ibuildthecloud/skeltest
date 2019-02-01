@@ -142,27 +142,26 @@ volumes:
 - name: docker
   host:
     path: /var/run/docker.sock
-#---
-#kind: pipeline
-#name: manifest
-#
-#depends_on:
-#- amd64
-#- arm64
-#- arm
-#
-#steps:
-#- name: manifest
-#  image: plugins/manifest
-#  settings:
-#    username:
-#      from_secret: docker_username
-#    password:
-#      from_secret: docker_password
-#    target: ibuildthecloud/skeltest:${DRONE_TAG}
-#    template: ibuildthecloud/skeltest:${DRONE_TAG}-ARCH
-#    platforms:
-#    - linux/amd64
-#    - linux/arm
-#    - linux/arm64
-#---
+---
+kind: pipeline
+name: manifest
+
+depends_on:
+- amd64
+- arm64
+- arm
+
+steps:
+- name: manifest
+  image: plugins/manifest
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    target: ibuildthecloud/skeltest:${DRONE_TAG}
+    template: ibuildthecloud/skeltest:${DRONE_TAG}-ARCH
+    platforms:
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
