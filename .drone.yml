@@ -64,7 +64,7 @@ steps:
   - dapper ci
 
 - name: github_binary_release
-  image: plugins/github-release:linux-amd64
+  image: plugins/github-release:linux-arm64
   settings:
     api_key:
       from_secret: github_token
@@ -112,7 +112,7 @@ volumes:
 #  - dapper ci
 #
 #- name: github_binary_release
-#  image: plugins/github-release:linux-amd64
+#  image: plugins/github-release:linux-arm
 #  settings:
 #    api_key:
 #      from_secret: github_token
