@@ -181,7 +181,6 @@ volumes:
     path: /var/run/docker.sock
 
 ---
----
 kind: pipeline
 name: manifest
 
@@ -213,5 +212,3 @@ depends_on:
 - amd64
 - arm64
 - arm
-
-...
