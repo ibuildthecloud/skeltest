@@ -26,8 +26,11 @@ steps:
     files:
     - "dist/artifacts/*"
   when:
-    #instance:
-    #- drone-publish.rancher.io
+    instance:
+    - drone-publish.rancher.io
+    ref:
+    - refs/head/master
+    - refs/tags/*
     event:
     - tag
 
@@ -42,10 +45,13 @@ steps:
     username:
       from_secret: docker_username
   when:
-    branch:
-    - master
-    - "release/*"
-    - alpha
+    instance:
+    - drone-publish.rancher.io
+    ref:
+    - refs/head/master
+    - refs/tags/*
+    event:
+    - tag
 
 volumes:
 - name: docker
@@ -80,8 +86,11 @@ steps:
     files:
     - "dist/artifacts/*"
   when:
-    #instance:
-    #- drone-publish.rancher.io
+    instance:
+    - drone-publish.rancher.io
+    ref:
+    - refs/head/master
+    - refs/tags/*
     event:
     - tag
 
@@ -96,64 +105,13 @@ steps:
     username:
       from_secret: docker_username
   when:
-    branch:
-    - master
-    - "release/*"
-    - alpha
-
-volumes:
-- name: docker
-  host:
-    path: /var/run/docker.sock
-
----
-kind: pipeline
-name: arm
-
-platform:
-  os: linux
-  arch: arm
-
-steps:
-- name: build
-  image: rancher/dapper:v0.4.1
-  commands:
-  - dapper ci
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
-
-- name: github_binary_release
-  image: plugins/github-release:linux-arm
-  settings:
-    api_key:
-      from_secret: github_token
-    checksum:
-    - sha256
-    draft: true
-    files:
-    - "dist/artifacts/*"
-  when:
-    #instance:
-    #- drone-publish.rancher.io
+    instance:
+    - drone-publish.rancher.io
+    ref:
+    - refs/head/master
+    - refs/tags/*
     event:
     - tag
-
-- name: docker-publish
-  image: plugins/docker
-  settings:
-    dockerfile: package/Dockerfile
-    password:
-      from_secret: docker_password
-    repo: ibuildthecloud/skeltest
-    tag: "${DRONE_TAG}"
-    username:
-      from_secret: docker_username
-  when:
-    branch:
-    - master
-    - "release/*"
-    - alpha
 
 volumes:
 - name: docker
@@ -176,7 +134,6 @@ steps:
       from_secret: docker_password
     platforms:
     - linux/amd64
-    - linux/arm
     - linux/arm64
     target: "ibuildthecloud/skeltest:${DRONE_TAG}"
     template: "ibuildthecloud/skeltest:${DRONE_TAG}-ARCH"
@@ -191,6 +148,5 @@ steps:
 depends_on:
 - amd64
 - arm64
-- arm
 
 ...
