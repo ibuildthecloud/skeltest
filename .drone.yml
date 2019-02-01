@@ -159,7 +159,7 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-    target: ibuildthecloud/skeltest:${DRONE_TAG}-hack
+    target: "ibuildthecloud/skeltest:${DRONE_TAG}"
     template: ibuildthecloud/skeltest:${DRONE_TAG}-ARCH
     platforms:
     - linux/amd64
