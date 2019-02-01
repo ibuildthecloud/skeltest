@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+source $(dirname $0)/version
+
+ARCH=${ARCH:-"amd64"}
+SUFFIX="-${ARCH}"
+
+cd $(dirname $0)/../package
+
+TAG=${TAG:-${VERSION}${SUFFIX}}
+REPO=${REPO:-ibuildthecloud}
+
+if echo $TAG | grep -q dirty; then
+    TAG=dev
+fi
+
+cp ../bin/skeltest .
+
+IMAGE=${REPO}/skeltest:${TAG}
+docker build -t ${IMAGE} .
+echo Built ${IMAGE}
