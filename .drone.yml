@@ -46,7 +46,6 @@ volumes:
 - name: docker
   host:
     path: /var/run/docker.sock
-
 ---
 kind: pipeline
 name: arm64
@@ -95,7 +94,6 @@ volumes:
 - name: docker
   host:
     path: /var/run/docker.sock
-
 ---
 kind: pipeline
 name: arm
@@ -144,7 +142,6 @@ volumes:
 - name: docker
   host:
     path: /var/run/docker.sock
-
 ---
 kind: pipeline
 name: manifest
@@ -168,3 +165,4 @@ steps:
     - linux/amd64
     - linux/arm
     - linux/arm64
+---
