@@ -21,13 +21,13 @@ steps:
       from_secret: github_token
     draft: true
     files:
-      - dist/artifacts/*
+    - dist/artifacts/*
     checksum:
-      - sha256
+    - sha256
   when:
     event: tag
 
-- name: docker-publish:
+- name: docker-publish
   image: plugins/docker
   settings:
     dockerfile: package/Dockerfile
