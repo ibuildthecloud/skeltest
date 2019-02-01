@@ -41,10 +41,10 @@ steps:
 #      branch: [master, release/*, alpha]
 #      event: tag
 
-# volumes: &volumes
-# - name: docker
-#   host:
-#     path: /var/run/docker.sock
+volumes: &volumes
+- name: docker
+  host:
+    path: /var/run/docker.sock
 # 
 # ----
 # kind: pipeline
