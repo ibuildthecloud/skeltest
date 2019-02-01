@@ -20,6 +20,7 @@ steps:
   settings:
     api_key:
       from_secret: github_token
+    prerelease: true
     checksum:
     - sha256
     files:
@@ -79,6 +80,7 @@ steps:
   settings:
     api_key:
       from_secret: github_token
+    prerelease: true
     checksum:
     - sha256
     files:
@@ -140,6 +142,7 @@ steps:
   settings:
     api_key:
       from_secret: github_token
+    prerelease: true
     checksum:
     - sha256
     files:

@@ -15,6 +15,9 @@ if echo $TAG | grep -q dirty; then
     TAG=dev
 fi
 
+mkdir -p dist/artifacts
+cp bin/* dist/artifacts/
+
 IMAGE=${REPO}/skeltest:${TAG}
 docker build -f package/Dockerfile -t ${IMAGE} .
 echo Built ${IMAGE}
