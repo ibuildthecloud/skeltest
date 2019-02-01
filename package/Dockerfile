@@ -1,3 +1,3 @@
 FROM alpine
-COPY skeltest /usr/bin/
+COPY bin/skeltest /usr/bin/
 CMD ["skeltest"]
