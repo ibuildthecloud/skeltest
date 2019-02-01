@@ -22,7 +22,6 @@ steps:
       from_secret: github_token
     checksum:
     - sha256
-    draft: true
     files:
     - "dist/artifacts/*"
   when:
@@ -82,7 +81,6 @@ steps:
       from_secret: github_token
     checksum:
     - sha256
-    draft: true
     files:
     - "dist/artifacts/*"
   when:
@@ -144,7 +142,6 @@ steps:
       from_secret: github_token
     checksum:
     - sha256
-    draft: true
     files:
     - "dist/artifacts/*"
   when:
