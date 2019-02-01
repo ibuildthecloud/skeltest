@@ -54,9 +54,6 @@ platform:
   os: linux
   arch: arm64
 
-steps: *steps
-volumes: *volumes
-
 ----
 kind: pipeline
 name: arm
@@ -64,9 +61,6 @@ name: arm
 platform:
   os: linux
   arch: arm
-
-steps: *steps
-volumes: *volumes
 
 -----
 kind: pipeline
