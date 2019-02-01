@@ -6,13 +6,13 @@ platform:
   arch: amd64
 
 steps: &steps
-  - name: build
-    image: rancher/dapper:v0.4.1
-    volumes:
-      - name: docker
-        path: /var/run/docker.sock
-    commands:
-      - dapper ci
+- name: build
+  image: rancher/dapper:v0.4.1
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+  - dapper ci
 
 #  - name: github_binary_release
 #    image: plugins/github-release:linux-amd64
@@ -42,9 +42,9 @@ steps: &steps
 #      event: tag
 
 volumes: &volumes
-  - name: docker
-    host:
-      path: /var/run/docker.sock
+- name: docker
+  host:
+    path: /var/run/docker.sock
 
 ----
 kind: pipeline
