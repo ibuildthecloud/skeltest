@@ -47,6 +47,7 @@ volumes: &volumes
     path: /var/run/docker.sock
 
 ----
+
 kind: pipeline
 name: arm64
 
@@ -54,9 +55,8 @@ platform:
   os: linux
   arch: arm64
 
-volumes: &volumes
-
 ----
+
 kind: pipeline
 name: arm
 
@@ -65,6 +65,7 @@ platform:
   arch: arm
 
 -----
+
 kind: pipeline
 name: manifest
 
@@ -84,6 +85,6 @@ steps:
     target: ibuildthecloud/skeltest:${DRONE_TAG}
     template: ibuildthecloud/skeltest:${DRONE_TAG}-ARCH
     platforms:
-      - linux/amd64
-      - linux/arm
-      - linux/arm64
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
