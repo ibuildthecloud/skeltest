@@ -130,8 +130,7 @@ steps:
 - name: build
   image: rancher/dapper:v0.4.1
   environment:
-  - name: DAPPER_HOST_ARCH
-    value: arm
+    DAPPER_HOST_ARCH: arm
   commands:
   - dapper ci
   volumes:
