@@ -1,6 +1,9 @@
 FROM golang:1.11-alpine
 # FROM arm=golang@sha256:9677abaf94d699258b23e107fc6aaa8935938b1f3cb9c79ada24045e5aeebee4
 
+ARG DAPPER_HOST_ARCH
+ENV ARCH $DAPPER_HOST_ARCH
+
 RUN apk -U add bash git gcc musl-dev docker vim less file curl wget ca-certificates
 RUN go get -d golang.org/x/lint/golint && \
     git -C /go/src/golang.org/x/lint/golint checkout -b current 06c8688daad7faa9da5a0c2f163a3d14aac986ca && \
