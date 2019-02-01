@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: amd64
 
@@ -47,7 +48,6 @@ volumes:
     path: /var/run/docker.sock
 
 ---
-
 kind: pipeline
 name: arm64
 
@@ -97,7 +97,6 @@ volumes:
     path: /var/run/docker.sock
 
 ---
-
 kind: pipeline
 name: arm
 
@@ -147,7 +146,6 @@ volumes:
     path: /var/run/docker.sock
 
 ---
-
 kind: pipeline
 name: manifest
 
