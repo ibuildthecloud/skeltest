@@ -16,7 +16,7 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: plugins/github-release:linux-amd64
+  image: plugins/github-release
   settings:
     api_key:
       from_secret: github_token
@@ -41,7 +41,7 @@ steps:
     password:
       from_secret: docker_password
     repo: ibuildthecloud/skeltest
-    tag: "${DRONE_TAG}"
+    tag: "${DRONE_TAG}-amd64"
     username:
       from_secret: docker_username
   when:
@@ -76,7 +76,7 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: plugins/github-release:linux-arm64
+  image: plugins/github-release
   settings:
     api_key:
       from_secret: github_token
@@ -101,7 +101,7 @@ steps:
     password:
       from_secret: docker_password
     repo: ibuildthecloud/skeltest
-    tag: "${DRONE_TAG}"
+    tag: "${DRONE_TAG}-arm64"
     username:
       from_secret: docker_username
   when:
@@ -120,6 +120,69 @@ volumes:
 
 ---
 kind: pipeline
+name: arm
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: build
+  image: rancher/dapper:v0.4.1
+  environment:
+  - DAPPER_HOST_ARCH=arm
+  commands:
+  - dapper ci
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+
+- name: github_binary_release
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    checksum:
+    - sha256
+    draft: true
+    files:
+    - "dist/artifacts/*"
+  when:
+    instance:
+    - drone-publish.rancher.io
+    ref:
+    - refs/head/master
+    - refs/tags/*
+    event:
+    - tag
+
+- name: docker-publish
+  image: plugins/docker
+  settings:
+    dockerfile: package/Dockerfile
+    password:
+      from_secret: docker_password
+    repo: ibuildthecloud/skeltest
+    tag: "${DRONE_TAG}-arm"
+    username:
+      from_secret: docker_username
+  when:
+    instance:
+    - drone-publish.rancher.io
+    ref:
+    - refs/head/master
+    - refs/tags/*
+    event:
+    - tag
+
+volumes:
+- name: docker
+  host:
+    path: /var/run/docker.sock
+
+---
+---
+kind: pipeline
 name: manifest
 
 platform:
@@ -135,6 +198,7 @@ steps:
     platforms:
     - linux/amd64
     - linux/arm64
+    - linux/arm
     target: "ibuildthecloud/skeltest:${DRONE_TAG}"
     template: "ibuildthecloud/skeltest:${DRONE_TAG}-ARCH"
     username:
@@ -148,5 +212,6 @@ steps:
 depends_on:
 - amd64
 - arm64
+- arm
 
 ...
