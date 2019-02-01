@@ -14,32 +14,32 @@ steps: &steps
     commands:
       - dapper ci
 
-  - name: github_binary_release
-    image: plugins/github-release:linux-amd64
-    settings:
-      api_key:
-        from_secret: github_token
-      draft: true
-      files:
-        - dist/artifacts/*
-      checksum:
-        - sha256
-    when:
-      event: tag
-
-  - name: docker-publish:
-    image: plugins/docker
-    settings:
-      dockerfile: package/Dockerfile
-      repo: ibuildthecloud/skeltest
-      tag: ${DRONE_TAG}
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-    when:
-      branch: [master, release/*, alpha]
-      event: tag
+#  - name: github_binary_release
+#    image: plugins/github-release:linux-amd64
+#    settings:
+#      api_key:
+#        from_secret: github_token
+#      draft: true
+#      files:
+#        - dist/artifacts/*
+#      checksum:
+#        - sha256
+#    when:
+#      event: tag
+#
+#  - name: docker-publish:
+#    image: plugins/docker
+#    settings:
+#      dockerfile: package/Dockerfile
+#      repo: ibuildthecloud/skeltest
+#      tag: ${DRONE_TAG}
+#      username:
+#        from_secret: docker_username
+#      password:
+#        from_secret: docker_password
+#    when:
+#      branch: [master, release/*, alpha]
+#      event: tag
 
 volumes: &volumes
   - name: docker
