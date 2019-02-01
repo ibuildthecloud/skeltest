@@ -9,38 +9,43 @@ platform:
 steps:
 - name: build
   image: rancher/dapper:v0.4.1
+  commands:
+  - dapper ci
   volumes:
   - name: docker
     path: /var/run/docker.sock
-  commands:
-  - dapper ci
 
 - name: github_binary_release
   image: plugins/github-release:linux-amd64
   settings:
     api_key:
       from_secret: github_token
-    draft: true
-    files:
-    - dist/artifacts/*
     checksum:
     - sha256
+    draft: true
+    files:
+    - "dist/artifacts/*"
   when:
-    event: tag
+    #instance:
+    #- drone-publish.rancher.io
+    event:
+    - tag
 
 - name: docker-publish
   image: plugins/docker
   settings:
     dockerfile: package/Dockerfile
-    repo: ibuildthecloud/skeltest
-    tag: ${DRONE_TAG}
-    username:
-      from_secret: docker_username
     password:
       from_secret: docker_password
+    repo: ibuildthecloud/skeltest
+    tag: "${DRONE_TAG}"
+    username:
+      from_secret: docker_username
   when:
-    branch: [master, release/*, alpha]
-    event: tag
+    branch:
+    - master
+    - "release/*"
+    - alpha
 
 volumes:
 - name: docker
@@ -58,38 +63,43 @@ platform:
 steps:
 - name: build
   image: rancher/dapper:v0.4.1
+  commands:
+  - dapper ci
   volumes:
   - name: docker
     path: /var/run/docker.sock
-  commands:
-  - dapper ci
 
 - name: github_binary_release
   image: plugins/github-release:linux-arm64
   settings:
     api_key:
       from_secret: github_token
-    draft: true
-    files:
-    - dist/artifacts/*
     checksum:
     - sha256
+    draft: true
+    files:
+    - "dist/artifacts/*"
   when:
-    event: tag
+    #instance:
+    #- drone-publish.rancher.io
+    event:
+    - tag
 
 - name: docker-publish
   image: plugins/docker
   settings:
     dockerfile: package/Dockerfile
-    repo: ibuildthecloud/skeltest
-    tag: ${DRONE_TAG}
-    username:
-      from_secret: docker_username
     password:
       from_secret: docker_password
+    repo: ibuildthecloud/skeltest
+    tag: "${DRONE_TAG}"
+    username:
+      from_secret: docker_username
   when:
-    branch: [master, release/*, alpha]
-    event: tag
+    branch:
+    - master
+    - "release/*"
+    - alpha
 
 volumes:
 - name: docker
@@ -107,38 +117,43 @@ platform:
 steps:
 - name: build
   image: rancher/dapper:v0.4.1
+  commands:
+  - dapper ci
   volumes:
   - name: docker
     path: /var/run/docker.sock
-  commands:
-  - dapper ci
 
 - name: github_binary_release
   image: plugins/github-release:linux-arm
   settings:
     api_key:
       from_secret: github_token
-    draft: true
-    files:
-    - dist/artifacts/*
     checksum:
     - sha256
+    draft: true
+    files:
+    - "dist/artifacts/*"
   when:
-    event: tag
+    #instance:
+    #- drone-publish.rancher.io
+    event:
+    - tag
 
 - name: docker-publish
   image: plugins/docker
   settings:
     dockerfile: package/Dockerfile
-    repo: ibuildthecloud/skeltest
-    tag: ${DRONE_TAG}
-    username:
-      from_secret: docker_username
     password:
       from_secret: docker_password
+    repo: ibuildthecloud/skeltest
+    tag: "${DRONE_TAG}"
+    username:
+      from_secret: docker_username
   when:
-    branch: [master, release/*, alpha]
-    event: tag
+    branch:
+    - master
+    - "release/*"
+    - alpha
 
 volumes:
 - name: docker
@@ -149,25 +164,33 @@ volumes:
 kind: pipeline
 name: manifest
 
-depends_on:
-- amd64
-- arm64
-- arm
+platform:
+  os: linux
+  arch: amd64
 
 steps:
 - name: manifest
   image: plugins/manifest
   settings:
-    username:
-      from_secret: docker_username
     password:
       from_secret: docker_password
-    target: "ibuildthecloud/skeltest:${DRONE_TAG}"
-    template: ibuildthecloud/skeltest:${DRONE_TAG}-ARCH
     platforms:
     - linux/amd64
     - linux/arm
     - linux/arm64
+    target: "ibuildthecloud/skeltest:${DRONE_TAG}"
+    template: "ibuildthecloud/skeltest:${DRONE_TAG}-ARCH"
+    username:
+      from_secret: docker_username
   when:
-    branch: [master, release/*, alpha]
-    event: tag
+    branch:
+    - master
+    - "release/*"
+    - alpha
+
+depends_on:
+- amd64
+- arm64
+- arm
+
+...
