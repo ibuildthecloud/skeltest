@@ -94,54 +94,54 @@ volumes:
 - name: docker
   host:
     path: /var/run/docker.sock
-#---
-#kind: pipeline
-#name: arm
-#
-#platform:
-#  os: linux
-#  arch: arm
-#
-#steps:
-#- name: build
-#  image: rancher/dapper:v0.4.1
-#  volumes:
-#  - name: docker
-#    path: /var/run/docker.sock
-#  commands:
-#  - dapper ci
-#
-#- name: github_binary_release
-#  image: plugins/github-release:linux-arm
-#  settings:
-#    api_key:
-#      from_secret: github_token
-#    draft: true
-#    files:
-#    - dist/artifacts/*
-#    checksum:
-#    - sha256
-#  when:
-#    event: tag
-#
-#- name: docker-publish
-#  image: plugins/docker
-#  settings:
-#    dockerfile: package/Dockerfile
-#    repo: ibuildthecloud/skeltest
-#    tag: ${DRONE_TAG}
-#    username:
-#      from_secret: docker_username
-#    password:
-#      from_secret: docker_password
-#  when:
-#    branch: [master, release/*, alpha]
-#    event: tag
-#
-#volumes:
-#- name: docker
-#  host:
-#    path: /var/run/docker.sock
+---
+kind: pipeline
+name: arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: build
+  image: rancher/dapper:v0.4.1
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  commands:
+  - dapper ci
+
+- name: github_binary_release
+  image: plugins/github-release:linux-arm
+  settings:
+    api_key:
+      from_secret: github_token
+    draft: true
+    files:
+    - dist/artifacts/*
+    checksum:
+    - sha256
+  when:
+    event: tag
+
+- name: docker-publish
+  image: plugins/docker
+  settings:
+    dockerfile: package/Dockerfile
+    repo: ibuildthecloud/skeltest
+    tag: ${DRONE_TAG}
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    branch: [master, release/*, alpha]
+    event: tag
+
+volumes:
+- name: docker
+  host:
+    path: /var/run/docker.sock
 #---
 #kind: pipeline
 #name: manifest
