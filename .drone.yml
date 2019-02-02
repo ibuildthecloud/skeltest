@@ -16,7 +16,7 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: ibuildthecloud/github-release:test2
+  image: ibuildthecloud/github-release:v0.0.1
   settings:
     api_key:
       from_secret: github_token
@@ -78,7 +78,7 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: ibuildthecloud/github-release:test2
+  image: ibuildthecloud/github-release:v0.0.1
   settings:
     api_key:
       from_secret: github_token
@@ -142,7 +142,7 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: ibuildthecloud/github-release:test2
+  image: ibuildthecloud/github-release:v0.0.1
   settings:
     api_key:
       from_secret: github_token
