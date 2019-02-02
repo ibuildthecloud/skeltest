@@ -16,13 +16,14 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: plugins/github-release
+  image: ibuildthecloud/github-release:test1
   settings:
     api_key:
       from_secret: github_token
     prerelease: true
     checksum:
     - sha256
+    checksum_file: CHECKSUMsum-amd64.txt
     files:
     - "dist/artifacts/*"
   when:
@@ -76,13 +77,14 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: plugins/github-release
+  image: ibuildthecloud/github-release:test1
   settings:
     api_key:
       from_secret: github_token
     prerelease: true
     checksum:
     - sha256
+    checksum_file: CHECKSUMsum-arm64.txt
     files:
     - "dist/artifacts/*"
   when:
@@ -138,13 +140,14 @@ steps:
     path: /var/run/docker.sock
 
 - name: github_binary_release
-  image: plugins/github-release
+  image: ibuildthecloud/github-release:test1
   settings:
     api_key:
       from_secret: github_token
     prerelease: true
     checksum:
     - sha256
+    checksum_file: CHECKSUMsum-arm.txt
     files:
     - "dist/artifacts/*"
   when:
