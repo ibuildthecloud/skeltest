@@ -16,7 +16,9 @@ if echo $TAG | grep -q dirty; then
 fi
 
 mkdir -p dist/artifacts
-cp bin/* dist/artifacts/
+for i in bin/*; do
+    cp -f $i dist/artifacts/$(basename $i)${SUFFIX}
+done
 
 IMAGE=${REPO}/skeltest:${TAG}
 docker build -f package/Dockerfile -t ${IMAGE} .
